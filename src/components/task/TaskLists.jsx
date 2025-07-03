@@ -16,7 +16,10 @@ export default function TaskLists({ tasks }) {
       <tbody>
         {tasks?.map((task) => {
           return (
-            <tr className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2">
+            <tr
+              key={task.id}
+              className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2"
+            >
               <td>
                 <FaRegStar color={task.isFavorite ? "yellow" : "gray"} />
               </td>

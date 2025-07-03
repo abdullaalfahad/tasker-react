@@ -18,9 +18,19 @@ export default function TaskBoard() {
   const [tasks, setTasks] = useState([defaultTask]);
   const [isShowAddEditTaskModal, setIsShowAddEditTaskModal] = useState(false);
 
+  const handleSaveTask = (newTask) => {
+    setTasks([...tasks, newTask]);
+    setIsShowAddEditTaskModal(false);
+  };
+
   return (
     <section className="mb-20">
-      {isShowAddEditTaskModal && <AddTaskModal onCancel={() => setIsShowAddEditTaskModal(false)} />}
+      {isShowAddEditTaskModal && (
+        <AddTaskModal
+          onSaveTask={handleSaveTask}
+          onCancel={() => setIsShowAddEditTaskModal(false)}
+        />
+      )}
 
       <div className="container">
         <div className="p-2 flex justify-end">
