@@ -1,6 +1,6 @@
 import { FaRegStar } from "react-icons/fa";
 
-export default function TaskLists({ tasks }) {
+export default function TaskLists({ tasks, onEdit }) {
   return (
     <table className="table-fixed overflow-auto xl:w-full">
       <thead>
@@ -30,7 +30,7 @@ export default function TaskLists({ tasks }) {
               <td>
                 <ul className="flex justify-center gap-1.5 flex-wrap">
                   {task.tags.map((tag) => (
-                    <li>
+                    <li key={tag}>
                       <span className="inline-block h-5 whitespace-nowrap rounded-[45px] bg-[#00D991A1] px-2.5 text-sm capitalize text-[#F4F5F6]">
                         {tag}
                       </span>
@@ -42,7 +42,9 @@ export default function TaskLists({ tasks }) {
               <td>
                 <div className="flex items-center justify-center space-x-3">
                   <button className="text-red-500">Delete</button>
-                  <button className="text-blue-500">Edit</button>
+                  <button className="text-blue-500 cursor-pointer" onClick={() => onEdit(task)}>
+                    Edit
+                  </button>
                 </div>
               </td>
             </tr>

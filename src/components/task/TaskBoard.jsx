@@ -17,9 +17,31 @@ const defaultTask = {
 export default function TaskBoard() {
   const [tasks, setTasks] = useState([defaultTask]);
   const [isShowAddEditTaskModal, setIsShowAddEditTaskModal] = useState(false);
+  const [taskToUpdate, setTaskToUpdate] = useState(null);
 
   const handleSaveTask = (newTask) => {
-    setTasks([...tasks, newTask]);
+    if (taskToUpdate) {
+      setTasks(
+        tasks.map((task) => {
+          if (task.id === newTask.id) {
+            return newTask;
+          }
+          return task;
+        })
+      );
+    } else {
+      setTasks([...tasks, newTask]);
+    }
+    setIsShowAddEditTaskModal(false);
+  };
+
+  const handleEditTask = (task) => {
+    setTaskToUpdate(task);
+    setIsShowAddEditTaskModal(true);
+  };
+
+  const handleCancelModal = () => {
+    setTaskToUpdate(null);
     setIsShowAddEditTaskModal(false);
   };
 
@@ -28,7 +50,8 @@ export default function TaskBoard() {
       {isShowAddEditTaskModal && (
         <AddTaskModal
           onSaveTask={handleSaveTask}
-          onCancel={() => setIsShowAddEditTaskModal(false)}
+          onCancel={handleCancelModal}
+          taskToUpdate={taskToUpdate}
         />
       )}
 
@@ -40,7 +63,7 @@ export default function TaskBoard() {
         <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
           <TaskAction onAddTaskModalOpen={() => setIsShowAddEditTaskModal(true)} />
           <div className="overflow-auto">
-            <TaskLists tasks={tasks} />
+            <TaskLists tasks={tasks} onEdit={handleEditTask} />
           </div>
         </div>
       </div>

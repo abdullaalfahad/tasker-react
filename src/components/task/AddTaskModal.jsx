@@ -1,13 +1,16 @@
 import { useState } from "react";
 
-export default function AddTaskModal({ onSaveTask, onCancel }) {
-  const [task, setTask] = useState({
-    title: "",
-    description: "",
-    tags: [],
-    priority: "",
-    isFavorite: false,
-  });
+export default function AddTaskModal({ onSaveTask, onCancel, taskToUpdate }) {
+  const [task, setTask] = useState(
+    taskToUpdate || {
+      id: crypto.randomUUID(),
+      title: "",
+      description: "",
+      tags: [],
+      priority: "",
+      isFavorite: false,
+    }
+  );
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -81,9 +84,9 @@ export default function AddTaskModal({ onSaveTask, onCancel }) {
                 required
               >
                 <option value="">Select Priority</option>
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
               </select>
             </div>
           </div>
@@ -92,7 +95,7 @@ export default function AddTaskModal({ onSaveTask, onCancel }) {
         <div className="mt-16 flex justify-between lg:mt-20">
           <button
             type="button"
-            className="rounded bg-red-600 px-4 py-2 text-white transition-all hover:opacity-80"
+            className="rounded cursor-pointer bg-red-600 px-4 py-2 text-white transition-all hover:opacity-80"
             onClick={onCancel}
           >
             Cancel
