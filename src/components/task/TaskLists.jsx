@@ -1,6 +1,6 @@
 import { FaRegStar } from "react-icons/fa";
 
-export default function TaskLists({ tasks, onEdit, onDeleteTask }) {
+export default function TaskLists({ tasks, onFavorite, onEdit, onDeleteTask }) {
   return (
     <table className="table-fixed overflow-auto xl:w-full">
       <thead>
@@ -21,7 +21,11 @@ export default function TaskLists({ tasks, onEdit, onDeleteTask }) {
               className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2"
             >
               <td>
-                <FaRegStar color={task.isFavorite ? "yellow" : "gray"} />
+                <FaRegStar
+                  color={task.isFavorite ? "yellow" : "gray"}
+                  className="cursor-pointer"
+                  onClick={() => onFavorite(task.id)}
+                />
               </td>
               <td>{task.title}</td>
               <td>

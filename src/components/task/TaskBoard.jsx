@@ -43,6 +43,20 @@ export default function TaskBoard() {
     setIsShowAddEditTaskModal(false);
   };
 
+  const handleToggleFavorite = (taskId) => {
+    setTasks(
+      tasks.map((task) => {
+        if (task.id === taskId) {
+          return {
+            ...task,
+            isFavorite: !task.isFavorite,
+          };
+        }
+        return task;
+      })
+    );
+  };
+
   const handleEditTask = (task) => {
     setTaskToUpdate(task);
     setIsShowAddEditTaskModal(true);
@@ -83,7 +97,12 @@ export default function TaskBoard() {
             onDeleteAllTasks={handleDeleteAllTasks}
           />
           <div className="overflow-auto">
-            <TaskLists tasks={tasks} onEdit={handleEditTask} onDeleteTask={handleDeleteTask} />
+            <TaskLists
+              tasks={tasks}
+              onFavorite={handleToggleFavorite}
+              onEdit={handleEditTask}
+              onDeleteTask={handleDeleteTask}
+            />
           </div>
         </div>
       </div>
